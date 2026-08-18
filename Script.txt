@@ -1,6 +1,5 @@
 -- [[ RECONSTRUCTED SOURCE: VERSION 10.0 ]] --
 -- [[ ACCURACY: 100% LITERAL LOG TRACE ]] --
-
 -- // [1] GLOBAL SERVICES // --
 local Players             = game:GetService("Players")
 local RunService          = game:GetService("RunService")
@@ -12,10 +11,8 @@ local GuiService          = game:GetService("GuiService")
 local CoreGui             = game:GetService("CoreGui")
 local ReplicatedStorage   = game:GetService("ReplicatedStorage")
 local StarterGui          = game:GetService("StarterGui")
-
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui   = LocalPlayer:WaitForChild("PlayerGui")
-
 -- // [2] SHARED CONSTANTS & DATA // --
 -- Full Sammy trivia / riddle database extracted from original constants
 local SammyDB = {
@@ -32,7 +29,6 @@ local SammyDB = {
     ["who owns sab"] = "SAMMY",
     ["creator"] = "SAMMY",
     ["owner"] = "SAMMY",
-
     ["roblox username"] = "SPYDERSAMMY",
     ["my roblox username"] = "SPYDERSAMMY",
     ["sammy username"] = "SPYDERSAMMY",
@@ -40,7 +36,6 @@ local SammyDB = {
     ["roblox name"] = "SPYDERSAMMY",
     ["username"] = "SPYDERSAMMY",
     ["my username"] = "SPYDERSAMMY",
-
     ["how old am i"] = "24",
     ["how old is sammy"] = "24",
     ["my age"] = "24",
@@ -58,7 +53,6 @@ local SammyDB = {
     ["birth month"] = "FEBRUARY",
     ["month born"] = "FEBRUARY",
     ["month i was born"] = "FEBRUARY",
-
     ["where was i born"] = "ALGERIA",
     ["where was i born at"] = "ALGERIA",
     ["birthplace"] = "ALGERIA",
@@ -79,7 +73,6 @@ local SammyDB = {
     ["city"] = "SAOPAULO",
     ["my city"] = "SAOPAULO",
     ["sammy city"] = "SAOPAULO",
-
     ["favorite color"] = "BLUE",
     ["fav color"] = "BLUE",
     ["my color"] = "BLUE",
@@ -112,7 +105,6 @@ local SammyDB = {
     ["youtube channel"] = "YOUTUBE",
     ["my youtube"] = "YOUTUBE",
     ["sammy youtube"] = "YOUTUBE",
-
     ["game name"] = "STEALABRAINROT",
     ["name of the game"] = "STEALABRAINROT",
     ["sab"] = "STEALABRAINROT",
@@ -142,7 +134,6 @@ local SammyDB = {
     ["sab release"] = "MAY162025",
     ["game released"] = "MAY162025",
     ["sab released"] = "MAY162025",
-
     ["my name twice"] = "SAMMYSAMMY",
     ["my name 2 times"] = "SAMMYSAMMY",
     ["name twice"] = "SAMMYSAMMY",
@@ -152,12 +143,10 @@ local SammyDB = {
     ["my age 3 times"] = "242424",
     ["owner twice"] = "SAMMYSAMMY",
     ["creator twice"] = "SAMMYSAMMY",
-
     ["BLUEBLUE"] = "BLUEBLUE",
     ["BLUEBLUEBLUE"] = "BLUEBLUEBLUE",
     ["FOOTBALLFOOTBALL"] = "FOOTBALLFOOTBALL",
     ["PIZZAPIZZA"] = "PIZZAPIZZA",
-
     ["first trait"] = "LIGHTNING",
     ["1st trait"] = "LIGHTNING",
     ["first trait created"] = "LIGHTNING",
@@ -166,7 +155,6 @@ local SammyDB = {
     ["lightning trait"] = "LIGHTNING",
     ["lightning"] = "LIGHTNING",
     ["MATEO"] = "MATEO",
-
     ["first mutation"] = "GOLD",
     ["1st mutation"] = "GOLD",
     ["second mutation"] = "DIAMOND",
@@ -195,7 +183,6 @@ local SammyDB = {
     ["13th mutation"] = "PHANTOM",
     ["fourteenth mutation"] = "CRYSTAL",
     ["14th mutation"] = "CRYSTAL",
-
     ["evil mutation"] = "CURSED",
     ["evil"] = "CURSED",
     ["cursed mutation"] = "CURSED",
@@ -208,7 +195,6 @@ local SammyDB = {
     ["latest mutation"] = "CRYSTAL",
     ["most recent"] = "CRYSTAL",
     ["newest mutation"] = "CRYSTAL",
-
     ["green mutation"] = "RADIOACTIVE",
     ["turns green"] = "RADIOACTIVE",
     ["green"] = "RADIOACTIVE",
@@ -227,7 +213,6 @@ local SammyDB = {
     ["orange mutation"] = "LAVA",
     ["turns orange"] = "LAVA",
     ["orange"] = "LAVA",
-
     ["first machine"] = "RAINBOWMACHINE",
     ["1st machine"] = "RAINBOWMACHINE",
     ["second machine"] = "BUBBLEGUMMACHINE",
@@ -264,7 +249,6 @@ local SammyDB = {
     ["17th machine"] = "SUMMERFUSE",
     ["eighteenth machine"] = "LOSTRADERS",
     ["18th machine"] = "LOSTRADERS",
-
     ["rarest brainrot"] = "STRAWBERRYELEPHANT",
     ["rarest"] = "STRAWBERRYELEPHANT",
     ["best brainrot"] = "STRAWBERRYELEPHANT",
@@ -276,11 +260,9 @@ local SammyDB = {
     ["lowest rarity"] = "COMMON",
     ["common rarity"] = "COMMON",
     ["COMMON"] = "COMMON",
-
     ["headless horseman"] = "HEADLESSHORSEMAN",
     ["HEADLESSHORSEMAN"] = "HEADLESSHORSEMAN",
 }
-
 local function normalize(str)
     if type(str) ~= "string" then return "" end
     str = string.lower(str)
@@ -288,110 +270,94 @@ local function normalize(str)
     str = string.gsub(str, "%s+", " ")
     return (string.match(str, "^%s*(.-)%s*$")) or ""
 end
-
 local NormalizedDB = {}
 for k, v in pairs(SammyDB) do
     NormalizedDB[normalize(k)] = v
 end
-
 -- // [3] RECURSIVE UI CONSTRUCTION // --
-local old = PlayerGui:FindFirstChild("Venom
-sCodeRedeemerPillUI")
+local old = PlayerGui:FindFirstChild("VenomsCodeRedeemerPillUI") or PlayerGui:FindFirstChild("TigysCodeRedeemerPillUI")
 if old then old:Destroy() end
-
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "Venom
-CodeRedeemerPillUI"
+ScreenGui.Name = "VenomsCodeRedeemerPillUI"
 ScreenGui.DisplayOrder = 8
 ScreenGui.IgnoreGuiInset = true
 ScreenGui.ResetOnSpawn = false
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.Parent = PlayerGui
-
 -- Main Pill
 local PillFrame = Instance.new("Frame")
 PillFrame.Name = "PillFrame"
 PillFrame.Size = UDim2.new(0, 292, 0, 44)
 PillFrame.Position = UDim2.new(0.5, -146, 0, 14)
-PillFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+PillFrame.BackgroundColor3 = Color3.fromRGB(20, 14, 28)
 PillFrame.BackgroundTransparency = 0.04
 PillFrame.Active = true
 PillFrame.Draggable = true
 PillFrame.BorderSizePixel = 0
 PillFrame.ZIndex = 10
 PillFrame.Parent = ScreenGui
-
 local PillCorner = Instance.new("UICorner")
 PillCorner.CornerRadius = UDim.new(0, 22)
 PillCorner.Parent = PillFrame
-
 local PillStroke = Instance.new("UIStroke")
-PillStroke.Color = Color3.fromRGB(70, 70, 85)
-PillStroke.Thickness = 1.15
-PillStroke.Transparency = 0.32
+PillStroke.Color = Color3.fromRGB(120, 70, 175)
+PillStroke.Thickness = 1.2
+PillStroke.Transparency = 0.25
 PillStroke.Parent = PillFrame
-
 -- Status dot
 local StatusIndicator = Instance.new("Frame")
 StatusIndicator.Name = "StatusIndicator"
 StatusIndicator.Size = UDim2.new(0, 11, 0, 11)
 StatusIndicator.Position = UDim2.new(0, 14, 0.5, -5.5)
-StatusIndicator.BackgroundColor3 = Color3.fromRGB(175, 65, 65)
+StatusIndicator.BackgroundColor3 = Color3.fromRGB(175, 65, 85)
 StatusIndicator.BorderSizePixel = 0
 StatusIndicator.ZIndex = 11
 StatusIndicator.Parent = PillFrame
-
 local StatusCorner = Instance.new("UICorner")
 StatusCorner.CornerRadius = UDim.new(1, 0)
 StatusCorner.Parent = StatusIndicator
-
 -- Title
 local PillText = Instance.new("TextLabel")
 PillText.Name = "PillText"
 PillText.Size = UDim2.new(0, 138, 1, 0)
 PillText.Position = UDim2.new(0, 32, 0, 0)
 PillText.BackgroundTransparency = 1
-PillText.Text = "Venom
-’s Redeemer"
-PillText.TextColor3 = Color3.fromRGB(238, 238, 245)
+PillText.Text = "Venom’s Redeemer"
+PillText.TextColor3 = Color3.fromRGB(242, 235, 255)
 PillText.Font = Enum.Font.GothamBold
 PillText.TextSize = 14
 PillText.TextXAlignment = Enum.TextXAlignment.Left
 PillText.ZIndex = 11
 PillText.Parent = PillFrame
-
 -- Stats
 local StatsBadge = Instance.new("Frame")
 StatsBadge.Name = "StatsBadge"
 StatsBadge.Size = UDim2.new(0, 76, 0, 22)
 StatsBadge.Position = UDim2.new(1, -158, 0.5, -11)
-StatsBadge.BackgroundColor3 = Color3.fromRGB(30, 30, 38)
+StatsBadge.BackgroundColor3 = Color3.fromRGB(34, 22, 48)
 StatsBadge.BorderSizePixel = 0
 StatsBadge.ZIndex = 11
 StatsBadge.Parent = PillFrame
-
 local StatsCorner = Instance.new("UICorner")
 StatsCorner.CornerRadius = UDim.new(0, 11)
 StatsCorner.Parent = StatsBadge
-
 local StatsText = Instance.new("TextLabel")
 StatsText.Name = "StatsText"
 StatsText.Size = UDim2.new(1, 0, 1, 0)
 StatsText.BackgroundTransparency = 1
 StatsText.Text = "60fps|0ms"
-StatsText.TextColor3 = Color3.fromRGB(170, 170, 185)
+StatsText.TextColor3 = Color3.fromRGB(195, 175, 225)
 StatsText.Font = Enum.Font.GothamMedium
 StatsText.TextSize = 11
 StatsText.TextXAlignment = Enum.TextXAlignment.Center
 StatsText.ZIndex = 12
 StatsText.Parent = StatsBadge
-
 -- Start button
 local StartPillBtn = Instance.new("TextButton")
 StartPillBtn.Name = "StartPillBtn"
 StartPillBtn.Size = UDim2.new(0, 62, 0, 26)
 StartPillBtn.Position = UDim2.new(1, -84, 0.5, -13)
-StartPillBtn.BackgroundColor3 = Color3.fromRGB(48, 150, 82)
+StartPillBtn.BackgroundColor3 = Color3.fromRGB(130, 50, 205)
 StartPillBtn.Text = "START"
 StartPillBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 StartPillBtn.Font = Enum.Font.GothamBold
@@ -400,53 +366,46 @@ StartPillBtn.AutoButtonColor = true
 StartPillBtn.BorderSizePixel = 0
 StartPillBtn.ZIndex = 11
 StartPillBtn.Parent = PillFrame
-
 local StartCorner = Instance.new("UICorner")
 StartCorner.CornerRadius = UDim.new(0, 13)
 StartCorner.Parent = StartPillBtn
-
 -- Expand
 local ExpandBtn = Instance.new("TextButton")
 ExpandBtn.Name = "ExpandBtn"
 ExpandBtn.Size = UDim2.new(0, 22, 0, 22)
 ExpandBtn.Position = UDim2.new(1, -28, 0.5, -11)
-ExpandBtn.BackgroundColor3 = Color3.fromRGB(36, 36, 44)
+ExpandBtn.BackgroundColor3 = Color3.fromRGB(42, 28, 58)
 ExpandBtn.Text = "▼"
-ExpandBtn.TextColor3 = Color3.fromRGB(195, 195, 210)
+ExpandBtn.TextColor3 = Color3.fromRGB(215, 195, 240)
 ExpandBtn.Font = Enum.Font.GothamBold
 ExpandBtn.TextSize = 12
 ExpandBtn.AutoButtonColor = true
 ExpandBtn.BorderSizePixel = 0
 ExpandBtn.ZIndex = 11
 ExpandBtn.Parent = PillFrame
-
 local ExpandCorner = Instance.new("UICorner")
 ExpandCorner.CornerRadius = UDim.new(0, 11)
 ExpandCorner.Parent = ExpandBtn
-
 -- Tray
 local TrayFrame = Instance.new("Frame")
 TrayFrame.Name = "TrayFrame"
 TrayFrame.Size = UDim2.new(1, 0, 0, 0)
 TrayFrame.Position = UDim2.new(0, 0, 1, 5)
-TrayFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 19)
+TrayFrame.BackgroundColor3 = Color3.fromRGB(16, 10, 24)
 TrayFrame.BackgroundTransparency = 0.02
 TrayFrame.ClipsDescendants = true
 TrayFrame.Visible = false
 TrayFrame.BorderSizePixel = 0
 TrayFrame.ZIndex = 9
 TrayFrame.Parent = PillFrame
-
 local TrayCorner = Instance.new("UICorner")
 TrayCorner.CornerRadius = UDim.new(0, 14)
 TrayCorner.Parent = TrayFrame
-
 local TrayStroke = Instance.new("UIStroke")
-TrayStroke.Color = Color3.fromRGB(50, 50, 62)
+TrayStroke.Color = Color3.fromRGB(95, 50, 140)
 TrayStroke.Thickness = 1
-TrayStroke.Transparency = 0.4
+TrayStroke.Transparency = 0.35
 TrayStroke.Parent = TrayFrame
-
 local TrayInner = Instance.new("Frame")
 TrayInner.Name = "TrayInner"
 TrayInner.Size = UDim2.new(1, -16, 1, -16)
@@ -454,26 +413,23 @@ TrayInner.Position = UDim2.new(0, 8, 0, 8)
 TrayInner.BackgroundTransparency = 1
 TrayInner.ZIndex = 10
 TrayInner.Parent = TrayFrame
-
 local ModeListContainer = Instance.new("Frame")
 ModeListContainer.Name = "ModeListContainer"
 ModeListContainer.Size = UDim2.new(1, 0, 0, 180)
 ModeListContainer.BackgroundTransparency = 1
 ModeListContainer.ZIndex = 11
 ModeListContainer.Parent = TrayInner
-
 local ModeListLayout = Instance.new("UIListLayout")
 ModeListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 ModeListLayout.Padding = UDim.new(0, 6)
 ModeListLayout.Parent = ModeListContainer
-
 local function createModeButton(text, order)
     local btn = Instance.new("TextButton")
     btn.Name = text:gsub("[^%w]", "")
     btn.Size = UDim2.new(1, 0, 0, 30)
-    btn.BackgroundColor3 = Color3.fromRGB(28, 28, 36)
+    btn.BackgroundColor3 = Color3.fromRGB(30, 20, 44)
     btn.Text = text
-    btn.TextColor3 = Color3.fromRGB(220, 220, 230)
+    btn.TextColor3 = Color3.fromRGB(230, 220, 245)
     btn.Font = Enum.Font.GothamMedium
     btn.TextSize = 12
     btn.AutoButtonColor = true
@@ -481,69 +437,61 @@ local function createModeButton(text, order)
     btn.LayoutOrder = order
     btn.ZIndex = 12
     btn.Parent = ModeListContainer
-
     local c = Instance.new("UICorner")
     c.CornerRadius = UDim.new(0, 8)
     c.Parent = btn
     return btn
 end
-
 local AutoRiddleBtn = createModeButton("AUTO RIDDLE: OFF", 1)
 local Msg1Btn       = createModeButton("1 Message", 2)
 local Msg2Btn       = createModeButton("2 Messages", 3)
 local Msg3Btn       = createModeButton("3 Messages", 4)
 local Msg4Btn       = createModeButton("4 Messages", 5)
-
 local FooterLabel = Instance.new("TextLabel")
 FooterLabel.Name = "FooterLabel"
 FooterLabel.Size = UDim2.new(1, 0, 0, 16)
 FooterLabel.Position = UDim2.new(0, 0, 1, -20)
 FooterLabel.BackgroundTransparency = 1
 FooterLabel.Text = "VENOM SCRIPTS"
-FooterLabel.TextColor3 = Color3.fromRGB(105, 105, 125)
+FooterLabel.TextColor3 = Color3.fromRGB(150, 120, 185)
 FooterLabel.Font = Enum.Font.GothamMedium
 FooterLabel.TextSize = 11
 FooterLabel.ZIndex = 11
 FooterLabel.Parent = TrayInner
-
 local FooterLink = Instance.new("TextLabel")
 FooterLink.Name = "FooterLink"
 FooterLink.Size = UDim2.new(1, 0, 0, 13)
 FooterLink.Position = UDim2.new(0, 0, 1, -6)
 FooterLink.BackgroundTransparency = 1
 FooterLink.Text = "https://discord.gg/bzyNGBVEz4"
-FooterLink.TextColor3 = Color3.fromRGB(80, 130, 210)
+FooterLink.TextColor3 = Color3.fromRGB(165, 115, 235)
 FooterLink.Font = Enum.Font.Gotham
 FooterLink.TextSize = 10
 FooterLink.ZIndex = 11
 FooterLink.Parent = TrayInner
-
 local CounterBadge = Instance.new("Frame")
 CounterBadge.Name = "CounterBadge"
 CounterBadge.Size = UDim2.new(0, 52, 0, 20)
 CounterBadge.Position = UDim2.new(0, 10, 0, 6)
-CounterBadge.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+CounterBadge.BackgroundColor3 = Color3.fromRGB(45, 28, 65)
 CounterBadge.Visible = false
 CounterBadge.BorderSizePixel = 0
 CounterBadge.ZIndex = 12
 CounterBadge.Parent = TrayFrame
-
 local CounterCorner = Instance.new("UICorner")
 CounterCorner.CornerRadius = UDim.new(0, 10)
 CounterCorner.Parent = CounterBadge
-
 local CounterText = Instance.new("TextLabel")
 CounterText.Name = "CounterText"
 CounterText.Size = UDim2.new(1, 0, 1, 0)
 CounterText.BackgroundTransparency = 1
 CounterText.Text = "0/1"
-CounterText.TextColor3 = Color3.fromRGB(195, 195, 210)
+CounterText.TextColor3 = Color3.fromRGB(225, 205, 245)
 CounterText.Font = Enum.Font.GothamBold
 CounterText.TextSize = 11
 CounterText.TextXAlignment = Enum.TextXAlignment.Center
 CounterText.ZIndex = 13
 CounterText.Parent = CounterBadge
-
 -- // [4] FUNCTIONAL LOGIC & SIGNAL CONNECTIONS // --
 local isExpanded     = false
 local isSniping      = false
@@ -552,7 +500,6 @@ local selectedMessages = 1
 local currentCount   = 0
 local lastAnswer     = ""
 local snipingThread  = nil
-
 -- Live FPS + Ping
 task.spawn(function()
     while ScreenGui and ScreenGui.Parent do
@@ -562,7 +509,6 @@ task.spawn(function()
         task.wait(0.3)
     end
 end)
-
 local function setExpanded(state)
     isExpanded = state
     if state then
@@ -581,11 +527,9 @@ local function setExpanded(state)
         ExpandBtn.Text = "▼"
     end
 end
-
 ExpandBtn.MouseButton1Click:Connect(function()
     setExpanded(not isExpanded)
 end)
-
 -- Answer engine
 local function answerRiddle(question)
     if type(question) ~= "string" or #question < 2 then return nil end
@@ -600,7 +544,6 @@ local function answerRiddle(question)
     end
     return nil
 end
-
 -- Find textboxes that look like code / answer / chat inputs
 local function findRelevantTextBoxes()
     local results = {}
@@ -615,7 +558,6 @@ local function findRelevantTextBoxes()
     end
     return results
 end
-
 -- Fire any Confirm / Submit / Redeem style button
 local function fireConfirmButtons()
     for _, obj in ipairs(PlayerGui:GetDescendants()) do
@@ -631,7 +573,6 @@ local function fireConfirmButtons()
         end
     end
 end
-
 -- Main scanning loop
 local function snipingLoop()
     while isSniping and ScreenGui and ScreenGui.Parent do
@@ -663,53 +604,46 @@ local function snipingLoop()
         task.wait(0.3)
     end
 end
-
 -- START / STOP
 StartPillBtn.MouseButton1Click:Connect(function()
     isSniping = not isSniping
     if isSniping then
         StartPillBtn.Text = "STOP"
-        StartPillBtn.BackgroundColor3 = Color3.fromRGB(190, 60, 60)
-        StatusIndicator.BackgroundColor3 = Color3.fromRGB(65, 205, 105)
+        StartPillBtn.BackgroundColor3 = Color3.fromRGB(190, 50, 90)
+        StatusIndicator.BackgroundColor3 = Color3.fromRGB(175, 75, 255)
         snipingThread = task.spawn(snipingLoop)
     else
         StartPillBtn.Text = "START"
-        StartPillBtn.BackgroundColor3 = Color3.fromRGB(48, 150, 82)
-        StatusIndicator.BackgroundColor3 = Color3.fromRGB(175, 65, 65)
+        StartPillBtn.BackgroundColor3 = Color3.fromRGB(130, 50, 205)
+        StatusIndicator.BackgroundColor3 = Color3.fromRGB(175, 65, 85)
     end
 end)
-
 -- Auto Riddle toggle
 AutoRiddleBtn.MouseButton1Click:Connect(function()
     autoRiddle = not autoRiddle
     AutoRiddleBtn.Text = autoRiddle and "AUTO RIDDLE: ON" or "AUTO RIDDLE: OFF"
-    AutoRiddleBtn.BackgroundColor3 = autoRiddle and Color3.fromRGB(42, 100, 62) or Color3.fromRGB(28, 28, 36)
+    AutoRiddleBtn.BackgroundColor3 = autoRiddle and Color3.fromRGB(105, 45, 160) or Color3.fromRGB(30, 20, 44)
 end)
-
 local function selectMessageCount(n)
     selectedMessages = n
     currentCount = 0
     CounterText.Text = "0/" .. n
     CounterBadge.Visible = true
-
     local list = {Msg1Btn, Msg2Btn, Msg3Btn, Msg4Btn}
     for i, btn in ipairs(list) do
-        btn.BackgroundColor3 = (i == n) and Color3.fromRGB(48, 92, 150) or Color3.fromRGB(28, 28, 36)
+        btn.BackgroundColor3 = (i == n) and Color3.fromRGB(135, 55, 210) or Color3.fromRGB(30, 20, 44)
     end
 end
-
 Msg1Btn.MouseButton1Click:Connect(function() selectMessageCount(1) end)
 Msg2Btn.MouseButton1Click:Connect(function() selectMessageCount(2) end)
 Msg3Btn.MouseButton1Click:Connect(function() selectMessageCount(3) end)
 Msg4Btn.MouseButton1Click:Connect(function() selectMessageCount(4) end)
-
 -- Public helpers
 _G.AnswerSammy = function(q)
     local a = answerRiddle(q)
-    print("[VENOM] →", a or "NOT FOUND")
+    print("[Venom] →", a or "NOT FOUND")
     return a
 end
-
 _G.SammyDB = SammyDB
 _G.VenomRedeemer = {
     Start = function()
@@ -727,11 +661,9 @@ _G.VenomRedeemer = {
     end,
     SetMessages = selectMessageCount,
 }
-
 -- // [5] INITIALIZATION // --
 selectMessageCount(1)
-StatusIndicator.BackgroundColor3 = Color3.fromRGB(175, 65, 65)
-
+StatusIndicator.BackgroundColor3 = Color3.fromRGB(175, 65, 85)
 print("══════════════════════════════════════")
 print("  Venom’s Redeemer  |  FULL SOURCE")
 print("  • UI + complete Sammy riddle DB")
